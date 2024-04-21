@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "calc.h"
+#include "calc_lib/calc.h"
+#include "uper_low_case/low_uper_case.h"
 
 enum CodeOperation
 {
@@ -16,6 +17,18 @@ enum CodeOperation
     EXIT,
     ASK_USER
 };
+
+void test_libconvertor(void)
+{
+    printf("----------------------------Test libconvert.so----------------------\n");
+    char str_upper[] = "HELLO WORLD\0";
+    char str_low[] = "hello world\0";
+    char* converted_low = toLower(str_upper);
+    char* converted_upper = toUpper(str_low);
+    printf("Origin Low case string: %s - %s\n", str_low, converted_low);
+    printf("Origin Upper case string: %s - %s\n", str_upper, converted_upper);
+
+}
 
 unsigned char ask_usr_choice(void)
 {
@@ -75,7 +88,7 @@ bool ask_enter_values(enum CodeOperation code, int* a, int* b)
 int main(void)
 {
 
-
+    test_libconvertor();
     unsigned char state = ASK_USER;
     int a = 0;
     int b = 0;

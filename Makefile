@@ -2,17 +2,28 @@
 CC=gcc
 # CFLAGS will be the options passed to the compiler.
 CFLAGS= -c -Wall
+SUBDIRS = ./calc_lib projectY
 
 all: prog
 
-prog: main.o calc.o
-	@$(CC) main.o calc.o -o main -lm
+make_shared_lib:
+	cd uper_low_case; pwd; make
+	cd ../; pwd
 
-main.o: main.o
-	@$(CC) $(CFLAGS) main.c
+make_calc_lib:
+	cd calc_lib; pwd; make
+	cd ../; pwd
 
-calc.o: calc.c calc.h
-	@$(CC) $(CFLAGS) calc.c
+prog: make_shared_lib make_calc_lib main.c
+	$(CC) main.c  -L . -lconvert  -L ./calc_lib -l calc -lm  -o main
 
-clean:
+clean_shared_lib:
+	cd uper_low_case; pwd; make clean
+	cd ../; pwd
+
+clean_calc_lib:
+	cd calc_lib; pwd; make clean
+	cd ../; pwd
+
+clean: clean_shared_lib clean_calc_lib
 	@rm -rf *.o main
